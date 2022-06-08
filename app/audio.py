@@ -3,14 +3,14 @@ import pyaudio
 
 audio = pyaudio.PyAudio()
 FORMAT = pyaudio.paInt16
-CHUNK = 1024
+CHUNK = 1024 * 8
 RATE = 44100
 BITS_PER_SAMPLE = 16
 CHANNELS = 1
 DEVICE_NAMES = [
-    "default",
-    # "pulse",
-    # "USB Audio Device: - (hw:2,0)",
+    "USB Audio Device: - (hw:2,0)",
+    # "default",
+    "pulse",
 ]
 
 
@@ -54,7 +54,7 @@ def generateAudio():
         rate=RATE,
         input=True,
         input_device_index=device_index,
-        output=True,
+        output=False,
         frames_per_buffer=CHUNK,
     )
     yield wav_header
