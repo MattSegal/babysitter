@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Babysitter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #666;
+      }
+      img {
+        width: 100vw;
+        height: calc(100vh - 60px);
+        object-fit: contain;
+      }
+      .title {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .title h1 {
+        line-height: 100%;
+        font-family: sans-serif;
+        margin: 0;
+        color: #aaa;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">
+     <h1>Babysitter</h1>
+    </div>
+    <img src="{{ url_for('video_feed') }}">
+  </body>
+</html>

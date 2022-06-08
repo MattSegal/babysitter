@@ -1,0 +1,6 @@
+Flask
+greenlet
+opencv-python
+wheel
+pyaudio
+audio-processing
