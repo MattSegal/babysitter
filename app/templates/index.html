@@ -11,16 +11,15 @@
       }
       img {
         width: 100vw;
-        height: calc(100vh - 10px + 70px);
+        height: calc(100vh - 10px + 50px);
         object-fit: contain;
       }
       .title {
-        height: 70px;
+        height: 50px;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
       }
       .title h1 {
         line-height: 100%;
@@ -34,9 +33,6 @@
   <body>
     <div class="title">
      <h1>Babysitter</h1>
-     <audio controls>
-        <source src="{{ url_for('audio_feed') }}" type="audio/x-wav;codec=pcm">
-     </audio>
     </div>
     <img src="{{ url_for('video_feed') }}">
   </body>

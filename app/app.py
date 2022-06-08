@@ -1,7 +1,6 @@
 from flask import Flask, render_template, Response
 
 from .camera import generateVideo
-from .audio import generateAudio
 
 app = Flask(__name__)
 
@@ -16,8 +15,3 @@ def video_feed():
     return Response(
         generateVideo(), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
-
-
-@app.route("/audio_feed")
-def audio_feed():
-    return Response(generateAudio(), mimetype="audio/x-wav;codec=pcm")
