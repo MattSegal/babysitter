@@ -7,15 +7,21 @@ CHUNK = 1024
 RATE = 44100
 BITS_PER_SAMPLE = 16
 CHANNELS = 1
-DEVICE_NAMES = ["pulse"]
+DEVICE_NAMES = [
+    "default",
+    # "pulse",
+    # "USB Audio Device: - (hw:2,0)",
+]
+
+
 device_index = 1
-
-
 for i in range(audio.get_device_count()):
     dev = audio.get_device_info_by_index(i)
-    print((i, dev["name"], dev["maxInputChannels"]))
-
-    device_index = 13
+    name = dev["name"]
+    print(i, name)
+    if name in DEVICE_NAMES:
+        print("Using audio device", i, name, dev)
+        device_index = i
 
 
 def genHeader(sampleRate, bitsPerSample, channels, samples):
