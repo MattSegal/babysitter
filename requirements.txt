@@ -3,3 +3,4 @@ greenlet
 opencv-python
 wheel
 pyaudio
+numba

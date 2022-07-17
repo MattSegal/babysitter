@@ -3,6 +3,7 @@ import threading
 from greenlet import getcurrent as get_ident
 import os
 import cv2
+from .nightvision import nightvision
 
 
 class CameraEvent(object):
@@ -122,8 +123,13 @@ class Camera(BaseCamera):
             # read current frame
             _, img = camera.read()
 
+            # add nightvision procesing
+            img = nightvision(img)
+
             # encode as a jpeg image and return it
-            yield cv2.imencode(".jpg", img)[1].tobytes()
+            img_bytes = cv2.imencode(".jpg", img)[1].tobytes()
+            # start_t = time.time()
+            yield img_bytes
 
 
 def gen(camera):
