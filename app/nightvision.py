@@ -2,7 +2,7 @@ import numpy as np
 from numba import jit
 
 
-KERNEL_SIZE = 5
+KERNEL_SIZE = 15
 
 
 def nightvision(img):
