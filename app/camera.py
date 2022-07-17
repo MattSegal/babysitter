@@ -122,6 +122,11 @@ class Camera(BaseCamera):
             # read current frame
             _, img = camera.read()
 
+            # adjust contrast
+            alpha = 1.5  # Contrast control (1.0-3.0)
+            beta = 0  # Brightness control (0-100)
+            img = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
+
             # encode as a jpeg image and return it
             encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 95]
             img_bytes = cv2.imencode(".jpg", img, encode_param)[1].tobytes()
