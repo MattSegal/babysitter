@@ -123,9 +123,16 @@ class Camera(BaseCamera):
             _, img = camera.read()
 
             # adjust contrast
-            alpha = 2.0  # Contrast control (1.0-3.0)
-            beta = 0.0  # Brightness control (0-100)
-            img = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
+            # alpha = 2.0  # Contrast control (1.0-3.0)
+            # beta = 0.0  # Brightness control (0-100)
+            # img = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
+
+            lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+            l_channel, a, b = cv2.split(lab)
+            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+            cl = clahe.apply(l_channel)
+            limg = cv2.merge((cl, a, b))
+            img = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
 
             # encode as a jpeg image and return it
             encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 95]
