@@ -123,8 +123,8 @@ class Camera(BaseCamera):
             _, img = camera.read()
 
             # adjust contrast
-            alpha = 1.5  # Contrast control (1.0-3.0)
-            beta = 0  # Brightness control (0-100)
+            alpha = 2.0  # Contrast control (1.0-3.0)
+            beta = 0.0  # Brightness control (0-100)
             img = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
 
             # encode as a jpeg image and return it
