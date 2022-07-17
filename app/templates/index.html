@@ -11,7 +11,7 @@
       }
       img {
         width: 100vw;
-        height: calc(100vh - 10px + 50px);
+        height: calc(100vh - 10px - 50px);
         object-fit: contain;
       }
       .title {
@@ -23,16 +23,14 @@
       }
       .title h1 {
         line-height: 100%;
-        font-family: sans-serif;
+        font-family: Arial, serif;
         margin: 0;
-        color: #aaa;
-        text-transform: uppercase;
-      }
+        color: #aaa;      }
     </style>
   </head>
   <body>
     <div class="title">
-     <h1>Babysitter</h1>
+     <h1>BabyCam 3000</h1>
     </div>
     <img src="{{ url_for('video_feed') }}">
   </body>

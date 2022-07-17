@@ -123,10 +123,7 @@ class Camera(BaseCamera):
             _, img = camera.read()
 
             # adjust contrast
-            # alpha = 2.0  # Contrast control (1.0-3.0)
-            # beta = 0.0  # Brightness control (0-100)
-            # img = cv2.convertScaleAbs(img, alpha=alpha, beta=beta)
-
+            # enhanced_img = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
             lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
             l_channel, a, b = cv2.split(lab)
             clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
