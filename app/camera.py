@@ -119,7 +119,6 @@ class Camera(BaseCamera):
         if not camera.isOpened():
             raise RuntimeError("Could not start camera.")
 
-        prev_img = None
         while True:
             # read current frame
             frames = []
@@ -127,17 +126,12 @@ class Camera(BaseCamera):
                 _, i = camera.read()
                 frames.append(i)
 
-            sum_img = np.sum(np.array(frames), axis=0)
-            img = np.clip(sum_img, 0, 255)
+            img = np.zeros(frames[0].shape)
+            for frame in frames:
+                mean = np.mean(frame)
+                img[frame > mean] += frame[frame > mean]
 
-            # img_orig = img
-            # if prev_img is not None:
-            #     img_avg = np.mean(img)
-            #     prev_img_avg = np.mean(prev_img)
-            #     new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
-            #     img = np.clip(new_img, 0, 255)
-
-            # prev_img = img_orig
+            img = np.clip(img, 0, 255)
 
             # adjust contrast
             lab = cv2.cvtColor(img.astype("uint8"), cv2.COLOR_BGR2LAB)
