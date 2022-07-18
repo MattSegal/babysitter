@@ -124,14 +124,14 @@ class Camera(BaseCamera):
             # read current frame
             _, img = camera.read()
 
-            # img_orig = img
-            # if prev_img is not None:
-            #     img_avg = np.mean(img)
-            #     prev_img_avg = np.mean(prev_img)
-            #     new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
-            #     img = np.clip(new_img, 0, 255)
+            img_orig = img
+            if prev_img is not None:
+                img_avg = np.mean(img)
+                prev_img_avg = np.mean(prev_img)
+                new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
+                img = np.clip(new_img, 0, 255)
 
-            # prev_img = img_orig
+            prev_img = img_orig
 
             # adjust contrast
             lab = cv2.cvtColor(img.astype("uint8"), cv2.COLOR_BGR2LAB)
@@ -142,7 +142,7 @@ class Camera(BaseCamera):
             img = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
 
             # encode as a jpeg image and return it
-            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 95]
+            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 100]
             img_bytes = cv2.imencode(".jpg", img, encode_param)[1].tobytes()
             yield img_bytes
 
