@@ -121,7 +121,18 @@ class Camera(BaseCamera):
 
         while True:
             # read current frame
-            _, img = camera.read()
+            frames = []
+            for _ in range(3):
+                _, i = camera.read()
+                frames.append(i)
+
+            img = np.zeros(frames[0].shape)
+            img_avg = np.mean(frames[0])
+            for frame in frames:
+                frame[frame < 50] = 0
+                img += frame / np.mean(frames)
+
+            img = np.clip(img_avg * img, 0, 255)
 
             # adjust contrast
             lab = cv2.cvtColor(img.astype("uint8"), cv2.COLOR_BGR2LAB)
