@@ -122,7 +122,7 @@ class Camera(BaseCamera):
         while True:
             # read current frame
             frames = []
-            for _ in range(3):
+            for _ in range(5):
                 _, i = camera.read()
                 frames.append(i)
 
