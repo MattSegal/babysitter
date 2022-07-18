@@ -124,6 +124,15 @@ class Camera(BaseCamera):
             # read current frame
             _, img = camera.read()
 
+            img_orig = img
+            if prev_img is not None:
+                img_avg = np.mean(img)
+                prev_img_avg = np.mean(prev_img)
+                new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
+                img = np.clip(new_img, 0, 255)
+
+            prev_img = img_orig
+
             # adjust contrast
             # lab = cv2.cvtColor(img.astype("uint8"), cv2.COLOR_BGR2LAB)
             # l_channel, a, b = cv2.split(lab)
