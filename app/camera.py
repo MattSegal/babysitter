@@ -127,7 +127,7 @@ class Camera(BaseCamera):
                 _, i = camera.read()
                 frames.append(i)
 
-            sum_img = np.subtract.reduce(np.array(frames), axis=0)
+            sum_img = np.sum(np.array(frames), axis=0)
             img = np.clip(sum_img, 0, 255)
 
             # img_orig = img
