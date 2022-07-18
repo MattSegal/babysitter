@@ -122,16 +122,22 @@ class Camera(BaseCamera):
         prev_img = None
         while True:
             # read current frame
-            _, img = camera.read()
+            frames = []
+            for _ in range(3):
+                _, i = camera.read()
+                frames.append(i)
 
-            img_orig = img
-            if prev_img is not None:
-                img_avg = np.mean(img)
-                prev_img_avg = np.mean(prev_img)
-                new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
-                img = np.clip(new_img, 0, 255)
+            sum_img = np.subtract.reduce(np.array(frames), axis=0)
+            img = np.clip(sum_img, 0, 255)
 
-            prev_img = img_orig
+            # img_orig = img
+            # if prev_img is not None:
+            #     img_avg = np.mean(img)
+            #     prev_img_avg = np.mean(prev_img)
+            #     new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
+            #     img = np.clip(new_img, 0, 255)
+
+            # prev_img = img_orig
 
             # adjust contrast
             lab = cv2.cvtColor(img.astype("uint8"), cv2.COLOR_BGR2LAB)
