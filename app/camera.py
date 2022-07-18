@@ -119,17 +119,22 @@ class Camera(BaseCamera):
         if not camera.isOpened():
             raise RuntimeError("Could not start camera.")
 
+        last_frame = None
+        num_frames = 3
         while True:
             # read current frame
             frames = []
-            for _ in range(5):
+            for _ in range(num_frames):
                 _, i = camera.read()
                 frames.append(i)
+                last_frame = i
+
+            frame_mean = np.mean(last_frame)
+            num_frames = int(255 / frame_mean)
 
             img = np.zeros(frames[0].shape)
             for frame in frames:
-                print(np.mean(frame))
-                frame[frame < 15] = 0
+                frame[frame < 0.75 * frame_mean] = 0
                 img += frame
 
             img = np.clip(img, 0, 255)
