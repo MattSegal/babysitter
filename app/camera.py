@@ -128,8 +128,7 @@ class Camera(BaseCamera):
 
             img = np.zeros(frames[0].shape)
             for frame in frames:
-                mean = np.mean(frame)
-                img[frame > mean] += frame[frame > mean]
+                img += frame
 
             img = np.clip(img, 0, 255)
 
