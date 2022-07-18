@@ -129,7 +129,7 @@ class Camera(BaseCamera):
             img = np.zeros(frames[0].shape)
             img_avg = np.mean(frames[0])
             for frame in frames:
-                frame[frame < 25] = 0
+                frame[frame < 15] = 0
                 img += frame / np.mean(frame)
 
             img = np.clip(img_avg * img, 0, 255)
