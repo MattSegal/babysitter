@@ -128,6 +128,7 @@ class Camera(BaseCamera):
 
             img = np.zeros(frames[0].shape)
             for frame in frames:
+                print(np.mean(frame))
                 frame[frame < 15] = 0
                 img += frame
 
