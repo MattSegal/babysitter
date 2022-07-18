@@ -2,6 +2,7 @@ import time
 import threading
 from greenlet import getcurrent as get_ident
 import os
+import numpy as np
 import cv2
 
 
@@ -118,13 +119,22 @@ class Camera(BaseCamera):
         if not camera.isOpened():
             raise RuntimeError("Could not start camera.")
 
+        prev_img = None
         while True:
             # read current frame
             _, img = camera.read()
 
+            img_orig = img
+            if prev_img is not None:
+                img_avg = np.mean(img)
+                prev_img_avg = np.mean(prev_img)
+                new_img = img_avg * ((img / img_avg) + (prev_img / prev_img_avg))
+                img = np.clip(new_img, 0, 255)
+
+            prev_img = img_orig
+
             # adjust contrast
-            # enhanced_img = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
-            lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+            lab = cv2.cvtColor(img.astype("uint8"), cv2.COLOR_BGR2LAB)
             l_channel, a, b = cv2.split(lab)
             clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
             cl = clahe.apply(l_channel)
