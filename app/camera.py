@@ -131,7 +131,6 @@ class Camera(BaseCamera):
 
             frame_mean = np.mean(last_frame)
             num_frames = max(1, int(120 / frame_mean))
-
             img = np.zeros(frames[0].shape)
             for frame in frames:
                 frame[frame < 0.75 * frame_mean] = 0
